@@ -11,3 +11,5 @@ src
 package.json
 tsconfig.json
 tsup.config.js
+
+/scipts

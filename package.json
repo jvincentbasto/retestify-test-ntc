@@ -1,7 +1,7 @@
 {
   "name": "@retestify/test-ntc",
   "description": "Test Package - Node, Tsup, Changeset (NTC)",
-  "version": "6.2.2",
+  "version": "6.2.1",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -26,7 +26,8 @@
   },
   "private": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "license": "MIT",
   "repository": {
