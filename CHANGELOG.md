@@ -1,5 +1,13 @@
 # @retestify/test-ntc
 
+## 6.2.2
+
+### Patch Changes
+
+- bump
+- Updated dependencies
+  - @retestify/test-ntc@6.2.2
+
 ## 6.1.0
 
 ### Minor Changes

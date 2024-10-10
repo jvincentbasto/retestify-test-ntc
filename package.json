@@ -1,7 +1,7 @@
 {
   "name": "@retestify/test-ntc",
   "description": "Test Package - Node, Tsup, Changeset (NTC)",
-  "version": "0.0.0",
+  "version": "6.2.2",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -46,6 +46,6 @@
   "homepage": "https://github.com/jvincentbasto/retestify-test-ntc#readme",
   "dependencies": {
     "prettier": "^2.8.8",
-    "@retestify/test-ntc": "git+https://github.com/jvincentbasto/retestify-test-ntc.git"
+    "@retestify/test-ntc": "^6.2.2"
   }
 }

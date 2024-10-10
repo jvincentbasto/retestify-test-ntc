@@ -10,8 +10,12 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
-  contents: write
-  pull-requests: write
+  # contents: write
+  # pull-requests: write
+  contents: read # Only read repository contents
+  pull-requests: write # Only if needed, for PR management
+  actions: none # Prevents access to manage workflows
+  packages: read # Only if needed for accessing packages
 
 jobs:
   publish:
