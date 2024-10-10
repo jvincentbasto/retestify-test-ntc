@@ -1,0 +1,46 @@
+{
+  "name": "@retestify/test-ntc",
+  "description": "Test Package - Node, Tsup, Changeset (NTC)",
+  "version": "6.2.0",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "cinit": "pnpm changeset init",
+    "cpex": "pnpm changeset pre exit",
+    "cpen": "pnpm changeset pre enter ${t:=dev}",
+    "crel": "pnpm changeset",
+    "cver": "pnpm changeset version",
+    "crv": "pnpm changeset && pnpm changeset version",
+    "lint": "tsc",
+    "build": "tsup-node",
+    "release": "pnpm build && changeset publish",
+    "rc": "[ -d .changeset ] && find .changeset -type f -name '*.md' -delete",
+    "alias": "echo 'add(a) | remove(r) | set(s) | changesets(c)'"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.8",
+    "tsup": "^6.7.0",
+    "typescript": "^4.9.5"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jvincentbasto/retestify-test-ntc.git"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "tsup",
+    "changesets"
+  ],
+  "author": "retestify",
+  "bugs": {
+    "url": "https://github.com/jvincentbasto/retestify-test-ntc/issues"
+  },
+  "homepage": "https://github.com/jvincentbasto/retestify-test-ntc#readme"
+}

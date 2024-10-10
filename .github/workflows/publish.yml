@@ -1,0 +1,101 @@
+name: Publish
+on:
+  workflow_run:
+    workflows: [CI]
+    branches:
+      - master
+      - next
+    types: [completed]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
+      - run: pnpm install
+
+      # * DISPLAY BRANCHES
+      - name: Display Branches
+        run: |
+          echo "Checkout Branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo "Workflow Triggered Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Default Branch: ${{ github.event.workflow_run.head_branch }}"
+
+      # * SET FLAG - TAG
+      - name: Set Flag - Tag
+        id: tag
+        run: |
+          HEAD_BRANCH="${{ github.event.workflow_run.head_branch }}"
+          echo "Head Branch: $HEAD_BRANCH"
+
+          if [[ "$HEAD_BRANCH" == "master" || "$HEAD_BRANCH" == "main" ]]; then
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          elif [[ "$HEAD_BRANCH" == "next" ]]; then
+            echo "tag=next" >> $GITHUB_OUTPUT
+          elif [[ "$HEAD_BRANCH" == "beta" ]]; then
+            echo "tag=beta" >> $GITHUB_OUTPUT
+          else
+            echo "tag=none" >> $GITHUB_OUTPUT
+          fi
+      - name: Display Flag - Tag
+        run: |
+          echo "Tag Flag: ${{ steps.tag.outputs.tag }}"
+
+      # # * SET FLAG - PUBLISH
+      # - name: Set Flag - Publish
+      #   id: publish
+      #   run: |
+      #     COMMIT_MESSAGE="${{ github.event.workflow_run.head_commit.message }}"
+      #     echo "Commit Message: $COMMIT_MESSAGE"
+
+      #     if [[ "$COMMIT_MESSAGE" =~ --publish-- || "$COMMIT_MESSAGE" =~ --publish=true ]]; then
+      #       echo "publish=true" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "publish=false" >> $GITHUB_OUTPUT
+      #     fi
+      # - name: Display Flag - Publish
+      #   run: |
+      #     echo "Publish Flag: ${{ steps.publish.outputs.publish }}"
+
+      # * EXECUTE CHANGESET ACTIONS
+      - name: Execute Changeset Actions
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_RETESTIFY_TEST_NTC_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_RETESTIFY_TEST_NTC_TOKEN }}
+
+      # * EXECUTE CHANGESET ACTIONS
+      - name: Display Flag - Changesets
+        uses: actions/github-script@v7
+        with:
+          # retries: 2
+          # retry-exempt-status-codes: 400,401
+          script: |
+            const outputs = ${{ toJSON(steps.changesets.outputs) }};
+            console.log("Log: Step Changesets:");
+
+            for (const [key, value] of Object.entries(outputs)) {
+              console.log(`${key}: ${value}`);
+            }
