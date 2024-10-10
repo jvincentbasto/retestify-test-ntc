@@ -76,6 +76,23 @@ jobs:
       #   run: |
       #     echo "Publish Flag: ${{ steps.publish.outputs.publish }}"
 
+      # * AUTHENTIACTION (PRIVATE REPOSITORY)
+      - name: Set Flag - Github Token
+        id: gh_token
+        run: |
+          if [ -n "${{ secrets.GH_RETESTIFY_TEST_NTC_TOKEN }}" ]; then
+            echo "gh_token=true" >> $GITHUB_OUTPUT
+          else
+            echo "gh_token=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Git Authentication
+        if: ${{ steps.gh_token.outputs.gh_token == 'true'}}
+        run: |
+          echo "Machine Github.com Login ${{ steps.gh_token.outputs.gh_token }}" > ~/.netrc
+          chmod 600 ~/.netrc
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GH_RETESTIFY_TEST_NTC_TOKEN }}
+
       # * EXECUTE CHANGESET ACTIONS
       - name: Execute Changeset Actions
         id: changesets
