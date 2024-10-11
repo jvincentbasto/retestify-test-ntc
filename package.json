@@ -1,7 +1,7 @@
 {
   "name": "@retestify/test-ntc",
   "description": "Test Package - Node, Tsup, Changeset (NTC)",
-  "version": "6.2.0",
+  "version": "6.2.3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -16,7 +16,8 @@
     "build": "tsup-node",
     "release": "pnpm build && changeset publish",
     "rc": "[ -d .changeset ] && find .changeset -type f -name '*.md' -delete",
-    "alias": "echo 'add(a) | remove(r) | set(s) | changesets(c)'"
+    "alias": "echo 'add(a) | remove(r) | set(s) | changesets(c)'",
+    "delete-packages": "./scripts/delete-packages.sh ${1:-my-org} ${2:-all} ${3:-my-repo}"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
@@ -42,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/jvincentbasto/retestify-test-ntc/issues"
   },
-  "homepage": "https://github.com/jvincentbasto/retestify-test-ntc#readme"
+  "homepage": "https://github.com/jvincentbasto/retestify-test-ntc#readme",
+  "dependencies": {
+    "prettier": "^2.8.8"
+  }
 }

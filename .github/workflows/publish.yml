@@ -32,6 +32,7 @@ jobs:
           node-version: "lts/*"
           cache: "pnpm"
       - run: pnpm install
+      # - run: pnpm install --no-frozen-lockfile
 
       # * DISPLAY BRANCHES
       - name: Display Branches

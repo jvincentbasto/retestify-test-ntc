@@ -24,5 +24,6 @@ jobs:
         run: |
           echo "Current Branch: ${{ github.ref_name }}"
 
+      # - run: pnpm install --no-frozen-lockfile
       - run: pnpm install
       - run: pnpm lint && pnpm build
