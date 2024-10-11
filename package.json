@@ -1,7 +1,7 @@
 {
   "name": "@retestify/test-ntc",
   "description": "Test Package - Node, Tsup, Changeset (NTC)",
-  "version": "6.2.2",
+  "version": "6.2.3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
