@@ -45,6 +45,6 @@
   "homepage": "https://github.com/jvincentbasto/retestify-test-ntc#readme",
   "dependencies": {
     "prettier": "^2.8.8",
-    "@retestify/test-ntc": "^6.2.2"
+    "@retestify/test-ntc": "git+https://github.com/jvincentbasto/retestify-test-ntc.git"
   }
 }
